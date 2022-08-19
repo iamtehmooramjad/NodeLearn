@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/iamtehmooramjad/NodeLearn#readme",
   "dependencies": {
+    "config": "^3.3.7",
     "express": "^4.18.1",
-    "joi": "^13.1.0"
+    "helmet": "^5.1.1",
+    "joi": "^13.1.0",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

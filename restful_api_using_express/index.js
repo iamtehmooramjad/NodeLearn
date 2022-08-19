@@ -44,15 +44,10 @@ app.get('/api/posts/:month/:year',(req, res)=>{
 //For validations npm install joi
 app.post('/api/courses',(req, res)=>{
 
-    const schema = {
-        name : Joi.string().min(3).required()
-    };
-    const result = Joi.validate(req.body,schema);
-    console.log(result);
-
-    if(result.error){
+    const {error} =validateCourse(req.body);
+    if(error){
         //Convention to send 400 Bad Request
-        res.status(400).send(result.error.details[0].message);
+        res.status(400).send(error.details[0].message);
         return;
     }
 
@@ -72,16 +67,59 @@ app.post('/api/courses',(req, res)=>{
 app.put('/api/courses/:id',(req, res)=>{
     //Look up the course
     //If not existing, return 404
+    const course = courses.find(c => c.id=== parseInt(req.params.id));
+    if (!course){
+        //Convention to send 404 if resource not found
+        res.status(404).send('Course not found');
+        return;
+    }
 
     //Validate
     //If invalid, return 400 - Bad request
+    const { error } =validateCourse(req.body);
+
+    if(error){
+        //Convention to send 400 Bad Request
+        res.status(400).send(error.details[0].message);
+        return;
+    }
+
 
     //Update course
     //Return the updated course
+    course.name = req.body.name
+    res.send(course);
+
 
 });
 
 
+//DELETE
+app.delete('/api/courses/:id',(req, res)=>{
+   //Look up the course
+   //Not existing, return 404
+    const course = courses.find(c => c.id=== parseInt(req.params.id));
+    if (!course){
+        //Convention to send 404 if resource not found
+        res.status(404).send('Course not found');
+        return;
+    }
+
+   //Delete
+    const index = courses.indexOf(course);
+    courses.splice(index,1);
+
+   //Return the same course
+    res.send(course);
+});
+
+
+function validateCourse(course) {
+    const schema = {
+        name : Joi.string().min(3).required()
+    };
+    return   Joi.validate(course,schema);
+}
 
 
 

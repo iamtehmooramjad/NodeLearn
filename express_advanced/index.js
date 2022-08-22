@@ -1,3 +1,11 @@
+/**
+ * To Debug, npm i debug
+ * create functions in that namespace and then use that function  instead of console.log to log messages
+ * e.g. SET DEBUG = app:startup or SET debug = app:startup, app:db or SET DEBUG = app:*
+ * SET DEBUG =  to log nothing
+ * */
+const startDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 const config = require('config');
 const helmet = require('helmet');
 const morgan  = require('morgan');
@@ -5,8 +13,18 @@ const Joi = require('joi');
 const logger = require('./logger');
 const authentication = require('./authentication');
 const express = require('express');
-const Console = require("console");
 const app = express();
+
+/**
+ *  Templating Engine: To generate dynamic html and return to client.
+ *  Most popular templating engines are Pug, Mustache, EJS
+ * */
+
+app.set('view engine','pug'); //Express will internally load this module
+app.set('views','./views'); // default, but to override path use this
+
+
+
 
 /**
 * Middleware:
@@ -67,10 +85,10 @@ app.use(helmet());
 
 if (app.get('env')==='development'){
     app.use(morgan('tiny'));
-    console.log('Morgan enabled');
+   startDebugger('Morgan enabled');
 }
 
-
+dbDebugger('Connected to Database')
 /**
  * Configuration
  * */
@@ -87,7 +105,7 @@ const courses = [
 
 //Get
 app.get('/',(req, res)=>{
-    res.send(`Hello World`);
+    res.render('index',{title:'My Express App', message:'Hello'});
 });
 
 app.get('/api/courses',(req,res)=>{
@@ -208,5 +226,4 @@ const port = process.env.PORT || 3000;
 app.listen(3000,()=>{
     console.log(`Listening on port ${port}`)
 });
-
 

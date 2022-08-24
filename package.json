@@ -2,7 +2,7 @@
   "name": "nodelearn",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,13 +18,10 @@
   },
   "homepage": "https://github.com/iamtehmooramjad/NodeLearn#readme",
   "dependencies": {
-    "config": "^3.3.7",
-    "debug": "^4.3.4",
+    "cors": "^2.8.5",
     "express": "^4.18.1",
-    "helmet": "^5.1.1",
-    "joi": "^13.1.0",
-    "morgan": "^1.10.0",
-    "pug": "^3.0.2"
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.21.4"
   },
   "devDependencies": {
     "nodemon": "^2.0.19"

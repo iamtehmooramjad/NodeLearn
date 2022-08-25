@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const  app = express();
 const productRouter = require('./routes/productRouter');
+const userRouter = require('./routes/userRouter');
 
 
 const corOptions = {
@@ -15,6 +16,7 @@ app.use(express.urlencoded({extended:true}));
 
 /** Routers */
 app.use('/api/products',productRouter);
+app.use('/api/users',userRouter);
 
 
 app.get('/',(req, res)=>{

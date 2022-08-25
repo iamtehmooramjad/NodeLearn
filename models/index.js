@@ -29,6 +29,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 db.products = require('./ProductModel.js')(sequelize,DataTypes);
+db.users = require('./UserModel.js')(sequelize,DataTypes);
 
 db.sequelize.sync({force: false})
     .then(()=>{

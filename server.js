@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const  app = express();
+const productRouter = require('./routes/productRouter');
+
 
 const corOptions = {
   origin : 'https://localhost:8081'
@@ -10,6 +12,9 @@ const corOptions = {
 app.use(cors(corOptions));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
+
+/** Routers */
+app.use('/api/products',productRouter);
 
 
 app.get('/',(req, res)=>{
